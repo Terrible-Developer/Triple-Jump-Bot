@@ -1,5 +1,6 @@
 import { Client, Intents } from 'discord.js';
-import { sayHello } from './messageActions/test';
+import { messageHandler } from './messageActions/messageHandler';
+import { commandHandler } from './commandActions/commandHandler';
 const client = new Client({ intents: [ Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES ] });
 
 require('dotenv').config();
@@ -13,8 +14,7 @@ client.on('shardError', error => {
 })
 
 client.on('messageCreate', msg => {
-    //msg.channel.send("pls respond");
-    sayHello(msg);
+    messageHandler(msg);
 });
 
 client.login(process.env.TOKEN);
