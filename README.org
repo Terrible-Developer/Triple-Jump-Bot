@@ -1,0 +1,11 @@
+#+TITLE: Readme
+
+* Triple Jump Bot
+This is a discord bot that started as a joke, but then turned into (kinda) reality.
+The original idea was basically "Well, discord bots are useful, and it looks interesting to make one. Also, why not use this to try out typescript outside of angular?", and that's basically it. So far, the only feature I really want to implement is music search and play, but I'm sure there'll be more features over time if this goes further.
+** About the name
+Triple Jump was (technically, it still is) my username in League of Legends, and even if I never play it anymore, the name kind of stuck around, so, there's that.
+
+* Adding to server
+For now, this bot is private (still under construction), but the link below would be the one to add it to a server with the correct permissions. Maybe I'll make it public eventually, who knows.
+Invite Link: https://discord.com/api/oauth2/authorize?client_id=874814068106612767&permissions=173949840384&scope=bot%20applications.commands
