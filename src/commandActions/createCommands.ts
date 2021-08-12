@@ -20,6 +20,15 @@ const createCustomCommands = async (client: Client): Promise<void> => {
             required: true
         }
     ]);
+
+    await createSlashCommand(client, 'play', 'Play the given youtube link', [
+        {
+            name: 'youtube-url',
+            type: 'STRING',
+            description: 'The URL for the video to be played',
+            required: true
+        }
+    ]);
 }
 
 export{

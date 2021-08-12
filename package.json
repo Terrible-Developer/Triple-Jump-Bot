@@ -16,7 +16,11 @@
     "build": "tsc -p ."
   },
   "dependencies": {
+    "@discordjs/voice": "^0.6.0",
     "discord.js": "^13.0.1",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "opus": "https://github.com/discordjs/opus/releases/download/v0.5.3/opus-v0.5.3-node-v93-napi-v3-linux-x64-glibc-2.31.tar.gz",
+    "sodium": "^3.0.2",
+    "ytdl-core": "^4.9.1"
   }
 }
