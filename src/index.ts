@@ -1,4 +1,5 @@
 import { Client, Intents } from 'discord.js';
+import { generateDependencyReport } from '@discordjs/voice';
 import { messageHandler } from './messageActions/messageHandler';
 import { commandHandler } from './commandActions/commandHandler';
 import { createCustomCommands } from './commandActions/createCommands';
@@ -9,6 +10,7 @@ require('dotenv').config();
 client.on('ready', () => {
     console.log(`Logged as ${client!.user!.tag}`);
     createCustomCommands(client);
+    console.log(generateDependencyReport());
 });
 
 client.on('shardError', error => {
