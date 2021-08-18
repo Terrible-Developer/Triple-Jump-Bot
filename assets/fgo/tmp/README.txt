@@ -1,0 +1,1 @@
+The assets in this folder are temporary and only here for testing purposes. Everything here will most likely be pulled through an API or at least an external server, as there would be too many files to keep locally.

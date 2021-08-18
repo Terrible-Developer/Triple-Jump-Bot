@@ -1,0 +1,8 @@
+[
+    {
+        "/servants": "/servants",
+        "/servants/:id": "/servants/:id",
+        "/ces": "/ces",
+        "/ces/:id": "/ces:id"
+    }
+]

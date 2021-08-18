@@ -1,4 +1,5 @@
 import { playYoutubeMusic } from '../helperFunctions/youtubeMusic';
+import { rollSingleGacha, roll10Gacha } from '../helperFunctions/fgo';
 
 const commandHandler = async (interaction: any): Promise<void> => {
     switch(interaction.commandName){
@@ -9,6 +10,13 @@ const commandHandler = async (interaction: any): Promise<void> => {
 
             case 'play':
                 await playYoutubeMusic(interaction);
+                break;
+
+            case 'fgo':
+                if(interaction.options._subcommand === 'single-roll')
+                    await interaction.reply(await rollSingleGacha());
+                else
+                    await interaction.reply(await roll10Gacha());
                 break;
 
             default:

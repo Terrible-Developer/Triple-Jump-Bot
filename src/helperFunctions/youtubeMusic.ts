@@ -1,10 +1,11 @@
 import ytdl from 'ytdl-core';
 //import path from 'path';
-import { AudioPlayerStatus, StreamType, createAudioPlayer, createAudioResource, joinVoiceChannel, VoiceConnection, NoSubscriberBehavior, PlayerSubscription } from '@discordjs/voice';
+import { AudioPlayerStatus, StreamType, createAudioPlayer, createAudioResource, joinVoiceChannel, VoiceConnection, NoSubscriberBehavior, entersState, PlayerSubscription } from '@discordjs/voice';
 /*debug*/
 import { VoiceConnectionStatus } from '@discordjs/voice';
 
-//channelid guildid voiceAdapterCreator(??)
+/*NOT WORKING, NEEDS FIX*/
+
 
 const playYoutubeMusic = async (interaction: any): Promise<void> => {
 
@@ -44,29 +45,45 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
         adapterCreator: interaction.channel.guild.voiceAdapterCreator
     });
 
+    console.log(connection.state);
+
+    //try {
+    //    await entersState(connection, VoiceConnectionStatus.Ready, 30e3);
+    //}
+    //catch (error) {
+    //    console.log(error);
+    //    console.log('did not work');
+    //    connection.destroy();
+    //}
+
 
     audioPlayer.play(audioResource);
     const subscription = connection.subscribe(audioPlayer);
     //console.log(connection.state);
 
 
-    if(subscription){
-        //console.log('SUBSCRIPTIONS: ', subscription?.connection.receiver.subscriptions);
-        console.log('technically exists');
-    }
+    //if(subscription){
+    //    //console.log('SUBSCRIPTIONS: ', subscription?.connection.receiver.subscriptions);
+    //    console.log('technically exists');
+    //    console.log(subscription?.connection);
+    //}
 
     //console.log(subscription?.connection);
     //console.log('STATE: ', subscription?.connection);
 
-    console.log('PLAYABLE: ', audioPlayer.playable);
-    console.log('STATE: ', audioPlayer.state);
+    //console.log('PLAYABLE: ', audioPlayer.playable);
+    //console.log('STATE: ', audioPlayer.state);
 
     connection.on(VoiceConnectionStatus.Signalling, () => {
-        console.log('SIGNALLING');
-    })
+        console.log('Signalling');
+    });
 
     connection.on(VoiceConnectionStatus.Ready, () => {
-        console.log('THE CONNECTION IS READY');
+        console.log('The connection is ready');
+    });
+
+    connection.on(VoiceConnectionStatus.Disconnected, () => {
+        console.log('Disconnected')
     })
 
     connection.on(VoiceConnectionStatus.Destroyed, () => {
