@@ -27,7 +27,6 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
 
 
     const stream = ytdl(interaction.options.getString('youtube-url'), { filter: 'audioonly' });
-    //const stream = createAudioResource('/home/victor/Music/persona_5/Persona 5 Royal - Our Light_僕らの光 - Ending song-41UPk-OeYQU.wav');
     const audioResource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
     //const audioResource = createAudioResource(path.join(__dirname, '../../assets/Persona 5 Royal OST - Gentle Madman.wav'));
 
@@ -99,7 +98,6 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
         //console.log(subscription?.connection);
     });
 
-    //audioPlayer.on(AudioPlayerStatus.Idle, () => connection.destroy());
     audioPlayer.on(AudioPlayerStatus.Idle, () => {
         console.log('Stopped playing');
         audioPlayer.stop();
