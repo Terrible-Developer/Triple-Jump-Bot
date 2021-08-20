@@ -1,11 +1,13 @@
 import axios from 'axios';
 
+//Interface for the gacha pools used, needed because of typescript shenanigans.
 interface IGachaPool {
     0?: {
         [key: string]: string
     };
 }
 
+//When I remove all the useless comments inside, the function will
 const rollSingleGacha = async (): Promise<string> => {
     //NEW PLAN
     // random number first decides type of pull (character or ce)
@@ -47,7 +49,7 @@ const rollSingleGacha = async (): Promise<string> => {
     //console.log(cePool);
 
     if(itemType === 0){
-        return servantsPool["0"]![rarity][Math.floor(Math.random() * 2)];
+        return servantsPool["0"]![rarity][Math.floor(Math.random() * 2)]; //probably could make this less ugly, but hey, if it works, it works
     }
     return cePool["0"]![rarity][Math.floor(Math.random() * 2)];
 };
