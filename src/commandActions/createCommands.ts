@@ -22,6 +22,8 @@ const createCustomCommands = async (client: Client): Promise<void> => {
         }
     ]);
 
+    await createSlashCommand(client, 'test-image', 'Image test', []);
+
     /*play command. Calls for the bot to play music from a given url, for now just youtube (still not working, already losing my mind)*/
     await createSlashCommand(client, 'play', 'Play the given youtube link', [
         {

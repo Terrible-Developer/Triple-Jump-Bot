@@ -1,6 +1,14 @@
 import ytdl from 'ytdl-core';
 //import path from 'path';
-import { AudioPlayerStatus, StreamType, createAudioPlayer, createAudioResource, joinVoiceChannel, VoiceConnection, NoSubscriberBehavior, entersState, PlayerSubscription } from '@discordjs/voice';
+import { AudioPlayerStatus,
+         StreamType,
+         createAudioPlayer,
+         createAudioResource,
+         joinVoiceChannel,
+         VoiceConnection,
+         NoSubscriberBehavior,
+         entersState,
+         PlayerSubscription } from '@discordjs/voice';
 /*debug*/
 import { VoiceConnectionStatus } from '@discordjs/voice';
 
@@ -19,11 +27,18 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
         if(channel.type === 'GUILD_VOICE'){
             channel.members.forEach((member: any) => {
                 if(member.id === interaction.user.id){
+                    //console.log(channel.id)
                     channelId = channel.id;
                 }
             });
         }
     });
+
+    if(!channelId){
+        console.log(channelId);
+        interaction.reply('You must be in a voice channel to perform this action!');
+        return ;
+    }
 
 
     const stream = ytdl(interaction.options.getString('youtube-url'), { filter: 'audioonly' });
@@ -36,15 +51,16 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
         }
     });
 
+
     //Handle audio stream to player here
 
     const connection = joinVoiceChannel({
         channelId: channelId,
         guildId: interaction.channel.guild.id,
-        adapterCreator: interaction.channel.guild.voiceAdapterCreator
+        adapterCreator: interaction.channel.guild.voiceAdapterCreator,
     });
 
-    console.log(connection.state);
+    //console.log(connection.state);
 
     //try {
     //    await entersState(connection, VoiceConnectionStatus.Ready, 30e3);
@@ -57,41 +73,20 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
 
 
     audioPlayer.play(audioResource);
-    const subscription = connection.subscribe(audioPlayer);
     //console.log(connection.state);
 
-
-    //if(subscription){
-    //    //console.log('SUBSCRIPTIONS: ', subscription?.connection.receiver.subscriptions);
-    //    console.log('technically exists');
-    //    console.log(subscription?.connection);
-    //}
-
-    //console.log(subscription?.connection);
-    //console.log('STATE: ', subscription?.connection);
-
-    //console.log('PLAYABLE: ', audioPlayer.playable);
-    //console.log('STATE: ', audioPlayer.state);
-
-    connection.on(VoiceConnectionStatus.Signalling, () => {
-        console.log('Signalling');
-    });
-
-    connection.on(VoiceConnectionStatus.Ready, () => {
-        console.log('The connection is ready');
-    });
-
-    connection.on(VoiceConnectionStatus.Disconnected, () => {
-        console.log('Disconnected')
-    })
-
-    connection.on(VoiceConnectionStatus.Destroyed, () => {
-        console.log('Now destroyed!');
-    });
-
     audioPlayer.on('error', (error: any) => {
-        console.log(`player error: ${error.message} || resource: ${error.resource.metadata.title}`);
+        console.log(`Player error: ${error.message}`); //|| resource: ${error.resource.metadata.title}`);
+        interaction.reply('There has been an error playing the requested video. Make sure that the given URL is valid.');
+        return ;
     });
+
+    const subscription = connection.subscribe(audioPlayer);
+
+    connection.on('stateChange', (oldState, newState) => {
+        console.log(`Connection changed from ${oldState} to ${newState}`);
+    });
+
 
     audioPlayer.on(AudioPlayerStatus.Playing, () => {
         console.log('Started Playing');

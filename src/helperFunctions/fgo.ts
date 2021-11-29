@@ -7,7 +7,7 @@ interface IGachaPool {
     };
 }
 
-//When I remove all the useless comments inside, the function will
+//When I remove all the useless comments inside, the function will look way better (I hope)
 const rollSingleGacha = async (): Promise<string> => {
     //NEW PLAN
     // random number first decides type of pull (character or ce)
@@ -41,17 +41,12 @@ const rollSingleGacha = async (): Promise<string> => {
         rarity = 2;
     else
         rarity = 1;
-
-    /*Debug to know what kind of item was pulled*/
-    //console.log(itemType === 0 ? 'Character' : 'Craft Essence');
-    //console.log(rarity);
-    //console.log(servantsPool);
-    //console.log(cePool);
+    const item = Math.floor(Math.random() * 2);
 
     if(itemType === 0){
-        return servantsPool["0"]![rarity][Math.floor(Math.random() * 2)]; //probably could make this less ugly, but hey, if it works, it works
+        return servantsPool["0"]![rarity][item]; //probably could make this less ugly, but hey, if it works, it works
     }
-    return cePool["0"]![rarity][Math.floor(Math.random() * 2)];
+    return cePool["0"]![rarity][item];
 };
 
 //Idea for guaranteed 4* when rolling 10: pass an bool argument to singleroll that defines if it is a guaranteed roll (then change the rarity odds in case it's true)

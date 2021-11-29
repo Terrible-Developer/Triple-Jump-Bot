@@ -1,5 +1,7 @@
 import { playYoutubeMusic } from '../helperFunctions/youtubeMusic';
 import { rollSingleGacha, roll10Gacha } from '../helperFunctions/fgo';
+import { MessageAttachment } from 'discord.js';
+import fs from 'fs';
 
 const commandHandler = async (interaction: any): Promise<void> => {
     switch(interaction.commandName){
@@ -7,6 +9,9 @@ const commandHandler = async (interaction: any): Promise<void> => {
                 await interaction.reply(interaction.options.getString('your-text'));
                 //console.log('test response worked');
                 break;
+
+            //case 'test-image':
+            //    await interaction.reply({ embeds: new MessageAttachment(fs.ReadStream('../../assets/artoria.png'))  });
 
             case 'play':
                 await playYoutubeMusic(interaction);
