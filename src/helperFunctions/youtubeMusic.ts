@@ -11,23 +11,9 @@ import { AudioPlayerStatus,
          AudioResource,
          AudioPlayerError,
          AudioPlayer} from '@discordjs/voice';
-/*debug*/
 import { VoiceConnectionStatus } from '@discordjs/voice';
 import { Interaction } from 'discord.js';
 import Player from '../utils/player';
-
-/*const addSong = (interaction: any): Promise<void> => {
-    let songs: string[];
-
-    const guild = interaction.client.guilds.cache.get(interaction.guildId!);
-    const member = guild?.members.cache.get(interaction.member?.user.id!);
-    const voiceChannel = member?.voice.channel;
-
-    if(!voiceChannel){
-        interaction.reply('You must be in a voice channel to perform this action!');
-        interaction.channel?.send()
-    }
-}*/
 
 let player: Player = new Player();
 player.initPlayer();
@@ -102,7 +88,6 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
 
 
 }
-
 
 
 export{
