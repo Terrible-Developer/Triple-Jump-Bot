@@ -31,18 +31,12 @@ import Player from '../utils/player';
 
 let player: Player = new Player();
 player.initPlayer();
-//let songQueue: string[] = [];
 
 const playYoutubeMusic = async (interaction: any): Promise<void> => {
 
-    //the current interaction channel id is the text channel, need to find a way to get the voice channel id
-    /*make the stream be an array of ytdl objects, or something related, and foreach stream, play through the voice, or something*/
-
     player.addSongToQueue(interaction.options.getString('youtube-url'));
-    //songQueue.push(interaction.options.getString('youtube-url'));
 
     let channelId: string = '';
-    //let player: Player = new Player();
 
 
 
@@ -62,17 +56,6 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
         return ;
     }
 
-
-    //const stream = ytdl(interaction.options.getString('youtube-url'), { filter: 'audioonly' });
-    //const audioResource: AudioResource<null> = createAudioResource(stream, { inputType: StreamType.Arbitrary });
-
-    /*const audioPlayer = createAudioPlayer({
-        behaviors: {
-            noSubscriber: NoSubscriberBehavior.Stop
-        }
-    });*/
-
-
     //Handle audio stream to player here
 
     const connection = joinVoiceChannel({
@@ -81,24 +64,8 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
         adapterCreator: interaction.channel.guild.voiceAdapterCreator,
     });
 
-    //audioPlayer.play(audioResource);
-
     connection.on('stateChange', (oldState, newState) => {
         console.log(`Connection changed from ${oldState.status} to ${newState.status}`);
-        /*if(player.getQueueLength() > 0 &&
-            player.getState().status === AudioPlayerStatus.Idle &&
-            newState.status === 'ready'
-            ){
-            player.playNextSong();
-        }*/
-        /*if(newState.status === 'ready'){
-            if(songQueue.length > 0 && audioPlayer){
-                const stream = ytdl(songQueue[0], { filter: 'audioonly' });
-                const audioResource: AudioResource<null> = createAudioResource(stream, { inputType: StreamType.Arbitrary });
-                audioPlayer.play(audioResource)
-                songQueue.shift();
-            }
-        }*/
     });
 
     connection.on(VoiceConnectionStatus.Ready, () => {
@@ -107,32 +74,12 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
         }
     });
 
-    /*audioPlayer.on('error', (error: any) => {
-        console.log(`Player error: ${error.message}`);
-        interaction.channel.send('There has been an error playing the requested video. Make sure that the given URL is valid.')
-        return ;
-    });*/
-
     player.addStateBehavior('error', (error: AudioPlayerError) => {
         console.log(`Player error: ${error.message}`);
         interaction.channel.send('There has been an error playing the requested video. Make sure that the given URL is valid.')
         return ;
     });
 
-    /*audioPlayer.on(AudioPlayerStatus.Idle, () => {
-        if(songQueue.length > 0){
-            const stream = ytdl(songQueue[0], { filter: 'audioonly' });
-            const audioResource: AudioResource<null> = createAudioResource(stream, { inputType: StreamType.Arbitrary });
-            audioPlayer.play(audioResource)
-            songQueue.shift();
-        }
-        else{
-            console.log('Stopped playing');
-            audioPlayer.stop();
-            interaction.channel.send('The music queue has endend. Please donate money so my creator can keep supporting his crippling crack addiction UwU')
-            connection.destroy();
-        }
-    });*/
 
     player.addStateBehavior(AudioPlayerStatus.Idle, () => {
         if(player.getQueueLength() < 1){
