@@ -7,11 +7,7 @@ const commandHandler = async (interaction: any): Promise<void> => {
     switch(interaction.commandName){
             case 'test-response':
                 await interaction.reply(interaction.options.getString('your-text'));
-                //console.log('test response worked');
                 break;
-
-            //case 'test-image':
-            //    await interaction.reply({ embeds: new MessageAttachment(fs.ReadStream('../../assets/artoria.png'))  });
 
             case 'play':
                 await playYoutubeMusic(interaction);
@@ -25,13 +21,9 @@ const commandHandler = async (interaction: any): Promise<void> => {
                 break;
 
             default:
-                await interaction.reply('An error has ocurred, please try again. If the error persists, try to contact the developer about it.');
+                await interaction.reply('An error has ocurred, please try again. If the error persists, please contact the developer about it.');
                 //console.log('default');
     }
-    //if(interaction.commandName === 'test-response')
-    //    await interaction.reply(interaction.options.getString('your-text'));
-    //else
-    //    console.log(interaction.commandName);
 }
 
 export{
