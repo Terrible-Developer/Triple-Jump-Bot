@@ -29,6 +29,7 @@ class ConnectionHandler {
 
     public destroyConnection = (guildId: string): void => {
         getVoiceConnection(guildId)!.destroy();
+        this.voiceConnection = undefined;
     }
 }
 

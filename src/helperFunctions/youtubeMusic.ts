@@ -1,5 +1,6 @@
 import { AudioPlayerStatus,
-         AudioPlayerError
+         AudioPlayerError,
+         PlayerSubscription
     } from '@discordjs/voice';
 import { VoiceConnectionStatus } from '@discordjs/voice';
 import { Interaction } from 'discord.js';
@@ -46,7 +47,8 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
 
     connectionHandler.addStateBehavior(VoiceConnectionStatus.Ready, () => {
         if(player.getQueueLength() > 0 && player.getState().status === AudioPlayerStatus.Idle){
-            player.playNextSong();
+            let songInfo: unknown = player.playNextSong();
+            console.log(songInfo);
         }
     })
 
@@ -67,7 +69,7 @@ const playYoutubeMusic = async (interaction: any): Promise<void> => {
     });
 
 
-    const subscription = connectionHandler.subscribe(player.getAudioPlayer());
+    const subscription: PlayerSubscription | undefined = connectionHandler.subscribe(player.getAudioPlayer());
 
 
     player.addStateBehavior(AudioPlayerStatus.Playing, () => {

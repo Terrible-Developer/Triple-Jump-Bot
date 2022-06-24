@@ -12,6 +12,11 @@ import { AudioPlayerStatus,
          AudioResource} from '@discordjs/voice';
 import ytdl from 'ytdl-core';
 
+interface tResourceReturn {
+    audioResource: AudioResource;
+    info: unknown;
+}
+
 class Player {
 
     constructor() {}
@@ -34,17 +39,25 @@ class Player {
         this.queue.push(url);
     }
 
-    private createAudioResource(url: string): AudioResource {
+    private createAudioResource(url: string): tResourceReturn { //AudioResource {
+        console.log('url for info and stream: ', url);
+        const info = ytdl.getBasicInfo(url);
+        console.log('info: ', info);
         const stream = ytdl(url, { filter: 'audioonly' });
-        return createAudioResource(stream, { inputType: StreamType.Arbitrary });
+        //return createAudioResource(stream, { inputType: StreamType.Arbitrary });
+        return {
+            audioResource: createAudioResource(stream, { inputType: StreamType.Arbitrary }),
+            info: info
+        }
     }
 
-    public playNextSong(): void {
+    public playNextSong(): unknown {
         if(this.queue.length < 1){
             return;
         }
-        const audioResource = this.createAudioResource(this.queue.shift()!);
-        this.audioPlayer.play(audioResource);
+        const resource = this.createAudioResource(this.queue.shift()!);
+        this.audioPlayer.play(resource.audioResource!);
+        return resource.info;
     }
 
     public clearQueue(): void {

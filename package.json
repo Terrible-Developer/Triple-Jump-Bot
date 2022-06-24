@@ -28,6 +28,6 @@
     "opus": "https://github.com/discordjs/opus/releases/download/v0.5.3/opus-v0.5.3-node-v93-napi-v3-linux-x64-glibc-2.31.tar.gz",
     "opusscript": "^0.0.8",
     "sodium": "^3.0.2",
-    "ytdl-core": "^4.9.1"
+    "ytdl-core": "^4.11.0"
   }
 }
